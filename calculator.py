@@ -62,7 +62,7 @@ def generate_challenge():
     b = random.randint(1, 20)
     global current_challenge_answer
     current_challenge_answer = a + b
-    challenge_label.config(text=f"¿Cuánto es {a} + {b}?")
+    challenge_label.config(text=f"How much is {a} + {b}?")
     challenge_result_var.set("")
     challenge_entry.delete(0, tk.END)
 
@@ -70,17 +70,17 @@ def check_challenge_answer():
     try:
         user_answer = int(challenge_entry.get())
     except ValueError:
-        challenge_result_var.set("Ingresa un número")
+        challenge_result_var.set("Type a number")
         return
     if user_answer == current_challenge_answer:
-        challenge_result_var.set("¡Correcto!")
-        engine.say("¡Correcto!")
+        challenge_result_var.set("¡Correct!")
+        engine.say("¡Correct!")
         engine.runAndWait()
         launch_confetti()
         challenge_frame.after(2000, generate_challenge)
     else:
-        challenge_result_var.set("Incorrecto, inténtalo de nuevo")
-        engine.say("Incorrecto, inténtalo de nuevo")
+        challenge_result_var.set("Incorrect, try again")
+        engine.say("Incorrect, try again")
         engine.runAndWait()
 
 def set_mode(mode):
@@ -108,13 +108,13 @@ def set_mode(mode):
         challenge_frame.pack(fill="both", expand=True)
         root.configure(bg="#E3F2FD")
         generate_challenge()
-        engine.say("Modo desafío. Resuelve el problema.")
+        engine.say("Challenge Mode. Solve the problem")
         engine.runAndWait()
 
 engine = pyttsx3.init()
 
 root = tk.Tk()
-root.title("Calculadora para Niños")
+root.title("Calculator for kids")
 root.geometry("400x600")
 root.configure(bg="#FCE4EC")
 
@@ -150,7 +150,7 @@ for row in buttons:
         button_list.append(b)
 
 challenge_frame = tk.Frame(root, bg="#E3F2FD")
-challenge_label = tk.Label(challenge_frame, text="Desafío", font=("Arial", 24), bg="#E3F2FD", fg="red")
+challenge_label = tk.Label(challenge_frame, text="Challenge", font=("Arial", 24), bg="#E3F2FD", fg="red")
 challenge_label.pack(pady=20)
 
 challenge_entry = tk.Entry(challenge_frame, font=("Arial", 24))
@@ -160,15 +160,15 @@ challenge_result_var = tk.StringVar()
 challenge_result_label = tk.Label(challenge_frame, textvariable=challenge_result_var, font=("Arial", 18), bg="#E3F2FD", fg="green")
 challenge_result_label.pack(pady=10)
 
-verify_button = tk.Button(challenge_frame, text="Verificar", font=("Arial", 18, "bold"), bg="#8BC34A", fg="white", command=check_challenge_answer)
+verify_button = tk.Button(challenge_frame, text="check", font=("Arial", 18, "bold"), bg="#8BC34A", fg="white", command=check_challenge_answer)
 verify_button.pack(pady=10)
 
 menubar = tk.Menu(root)
 mode_menu = tk.Menu(menubar, tearoff=0)
-mode_menu.add_command(label="Niños / Autismo", command=lambda: set_mode("autismo"))
+mode_menu.add_command(label="Kids", command=lambda: set_mode("autismo"))
 
-mode_menu.add_command(label="Modo Desafío", command=lambda: set_mode("desafio"))
-menubar.add_cascade(label="Modo Desafio", menu=mode_menu)
+mode_menu.add_command(label="Challenge Mode", command=lambda: set_mode("desafio"))
+menubar.add_cascade(label="Challenge Mode", menu=mode_menu)
 root.config(menu=menubar)
 
 
